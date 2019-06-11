@@ -111,558 +111,497 @@ Cover all the failed exploits.
 * Privilege Escalation
 ** Linux Enumeration
 https://blog.g0tmi1k.com/2011/08/basic-linux-privilege-escalation/
-
 *** Operating System
 **** What is the distro and version?
-cat /etc/issue
-cat /etc/*-release
-cat /etc/lsb-release    # Debian-based
-cat /etc/redhat-release # Redhat-based
+***** cat /etc/issue
+***** cat /etc/*-release
+***** cat /etc/lsb-release    # Debian-based
+***** cat /etc/redhat-release # Redhat-based
 
 **** What is the kernel version? What is the architecture?
-cat /proc/version
-uname -a
-uname -mrs
-rpm -q kernel
-dmesg | grep Linux
-ls /boot | grep vmlinuz-
+***** cat /proc/version
+***** uname -a
+***** uname -mrs
+***** rpm -q kernel
+***** dmesg | grep Linux
+***** ls /boot | grep vmlinuz-
 
 **** What can be learned from environment variables?
-cat /etc/profile
-cat /etc/bashrc
-cat ~/.bash_profile
-cat ~/.bashrc
-cat ~/.bash_logout
-env
-set
+***** cat /etc/profile
+***** cat /etc/bashrc
+***** cat ~/.bash_profile
+***** cat ~/.bashrc
+***** cat ~/.bash_logout
+***** env
+***** set
 
 **** Is there a printer?
-lpstat -a
+***** lpstat -a
 
 *** Applications and Services
 **** What services are running and what are their privileges?
-ps aux
-ps -ef
-top
-cat /etc/services
+***** ps aux
+***** ps -ef
+***** top
+***** cat /etc/services
 
 **** Which services are being run by root? Do they have known vulnerabilities?
-ps aux | grep root
-ps -ef | grep root
+***** ps aux | grep root
+***** ps -ef | grep root
 
 **** What applications are installed and what are their versions? Are they currently running?
-ls -alh /usr/bin/
-ls -alh /sbin/
-dpkg -l
-rpm -qa
-ls -alh /var/cache/apt/archives0
-ls -alh /var/cache/yum/
+***** ls -alh /usr/bin/
+***** ls -alh /sbin/
+***** dpkg -l
+***** rpm -qa
+***** ls -alh /var/cache/apt/archives0
+***** ls -alh /var/cache/yum/
 
 **** Are any of the services misconfigured? Are any vulnerable plugins attached?
-cat /etc/syslog.conf
-cat /etc/chttp.conf
-cat /etc/lighttpd.conf
-cat /etc/cups/cupsd.conf
-cat /etc/inetd.conf
-cat /etc/apache2/apache2.conf
-cat /etc/my.conf
-cat /etc/httpd/conf/httpd.conf
-cat /opt/lampp/etc/httpd.conf
-ls -aRl /etc/ | awk '$1 ~ /^.*r.*/'
+***** cat /etc/syslog.conf
+***** cat /etc/chttp.conf
+***** cat /etc/lighttpd.conf
+***** cat /etc/cups/cupsd.conf
+***** cat /etc/inetd.conf
+***** cat /etc/apache2/apache2.conf
+***** cat /etc/my.conf
+***** cat /etc/httpd/conf/httpd.conf
+***** cat /opt/lampp/etc/httpd.conf
+***** ls -aRl /etc/ | awk '$1 ~ /^.*r.*/'
 
 **** What jobs are scheduled?
-crontab -l
-ls -alh /var/spool/cron
-ls -al /etc/ | grep cron
-ls -al /etc/cron*
-cat /etc/cron*
-cat /etc/at.allow
-cat /etc/at.deny
-cat /etc/cron.allow
-cat /etc/cron.deny
-cat /etc/crontab
-cat /etc/anacrontab
-cat /var/spool/cron/crontabs/root
+***** crontab -l
+***** ls -alh /var/spool/cron
+***** ls -al /etc/ | grep cron
+***** ls -al /etc/cron*
+***** cat /etc/cron*
+***** cat /etc/at.allow
+***** cat /etc/at.deny
+***** cat /etc/cron.allow
+***** cat /etc/cron.deny
+***** cat /etc/crontab
+***** cat /etc/anacrontab
+***** cat /var/spool/cron/crontabs/root
 
 **** Are there any plain text usernames and/or passwords?
-grep -i user [filename]
-grep -i pass [filename]
-grep -C 5 "password" [filename]
-find .  -name "*.php" -print0 | xargs -0 grep -i -n "var $password"
+***** grep -i user [filename]
+***** grep -i pass [filename]
+***** grep -C 5 "password" [filename]
+***** find .  -name "*.php" -print0 | xargs -0 grep -i -n "var $password"
 
 *** Communications and Networking
 **** What NICs does the system have? Is it connected to another network?
-/sbin/ifconfig -a
-cat /etc/network/interfaces
-cat /etc/sysconfig/network
+***** /sbin/ifconfig -a
+***** cat /etc/network/interfaces
+***** cat /etc/sysconfig/network
 
 **** What are the network configuration settings? What can you find out about the network? DHCP? DNS? Gateway?
-cat /etc/resolv.conf
-cat /etc/sysconfig/network
-cat /etc/networks
-iptables -L
-hostname
-dnsdomainname
+***** cat /etc/resolv.conf
+***** cat /etc/sysconfig/network
+***** cat /etc/networks
+***** iptables -L
+***** hostname
+***** dnsdomainname
 
 **** What other users and hosts are communicating with the system?
-lsof -i
-lsof -i :80
-grep 80 /etc/services
-netstat -antup
-netstat -antpx
-netstat -tulpn
-chkconfig --list
-chkconfig --list | grep 3:on
-last
-w
+***** lsof -i
+***** lsof -i :80
+***** grep 80 /etc/services
+***** netstat -antup
+***** netstat -antpx
+***** netstat -tulpn
+***** chkconfig --list
+***** chkconfig --list | grep 3:on
+***** last
+***** w
 
 **** What IP and MAC addresses are cached?
-arp -e
-route
-/sbin/route -nee
+***** arp -e
+***** route
+***** /sbin/route -nee
 
 **** Is packet sniffing possible? What can be seen?
-tcpdump tcp dst [ip] [port] and tcp dst [ip] [port]
+***** tcpdump tcp dst [ip] [port] and tcp dst [ip] [port]
 
 **** Do you have a shell? Can you interact with the system?
 http://lanmaster53.com/2011/05/7-linux-shells-using-built-in-tools/
 
 **** Is port forwarding possible?
- ssh -[L/R] [local port]:[remote ip]:[remote port] [local user]@[local ip]
+*****  ssh -[L/R] [local port]:[remote ip]:[remote port] [local user]@[local ip]
 
 **** Is tunnelling possible?
-ssh -D 127.0.0.1:9050 -N [username]@[ip]
-proxychains ifconfig
+***** ssh -D 127.0.0.1:9050 -N [username]@[ip]
+***** proxychains ifconfig
 
 *** Confidential Information and Users
 **** Who are you? Who is logged in? Who has been logged in? Who else is there? Who can do what?
-id
-who
-w
-last
-cat /etc/passwd | cut -d: -f1 # list of users
-grep -v -E "^#" /etc/passwd | awk -F: '$3 == 0  { print $1 }' # List of superusers
-cat /etc/sudoers
-sudo -l
+***** id
+***** who
+***** w
+***** last
+***** cat /etc/passwd | cut -d: -f1 # list of users
+***** grep -v -E "^#" /etc/passwd | awk -F: '$3 == 0  { print $1 }' # List of superusers
+***** cat /etc/sudoers
+***** sudo -l
 
 **** What sensitive files can be found?
-cat /etc/passwd
-cat /etc/group
-cat /etc/shadow
-ls -alh /var/mail
+***** cat /etc/passwd
+***** cat /etc/group
+***** cat /etc/shadow
+***** ls -alh /var/mail
 
 **** Anything interesting in the home directories if they are possible to access?
-ls -ahlR /root
-ls -ahlR /home
+***** ls -ahlR /root
+***** ls -ahlR /home
 
 **** Are there any passwords in scripts, databases, config file, or log files?
-cat /var/apache2/config.inc
-cat /var/lib/mysql/mysql/user.MYD
-cat /root/anaconda-ks.cfg
+***** cat /var/apache2/config.inc
+***** cat /var/lib/mysql/mysql/user.MYD
+***** cat /root/anaconda-ks.cfg
 
 **** What has the user been doing? Anything interesting in plain text? What have they been editing?
-cat ~/.bash_history
-cat ~/.nano_history
-cat ~/.atftp_history
-cat ~/.mysql_history
-cat ~/.php_history
+***** cat ~/.bash_history
+***** cat ~/.nano_history
+***** cat ~/.atftp_history
+***** cat ~/.mysql_history
+***** cat ~/.php_history
 
 **** What user information can be found?
-cat ~/.bashrc
-cat ~/.profile
-cat /var/mail/root
-cat /var/spool/mail/root
+***** cat ~/.bashrc
+***** cat ~/.profile
+***** cat /var/mail/root
+***** cat /var/spool/mail/root
 
 **** Can private-key information be found?
-cat ~/.ssh/authorized_keys
-cat ~/.ssh/identity.pub
-cat ~/.ssh/identity
-cat ~/.ssh/id_rsa.pub
-cat ~/.ssh/id_rsa
-cat ~/.ssh/id_dsa.pub
-cat ~/.ssh/id_dsa
-cat /etc/ssh/ssh_config
-cat /etc/ssh/sshd_config
-cat /etc/ssh/ssh_host_dsa_key.pub
-cat /etc/ssh/ssh_host_dsa_key
-cat /etc/ssh/ssh_host_rsa_key.pub
-cat /etc/ssh/ssh_host_rsa_key
-cat /etc/ssh/ssh_host_key.pub
-cat /etc/ssh/ssh_host_key
+***** cat ~/.ssh/authorized_keys
+***** cat ~/.ssh/identity.pub
+***** cat ~/.ssh/identity
+***** cat ~/.ssh/id_rsa.pub
+***** cat ~/.ssh/id_rsa
+***** cat ~/.ssh/id_dsa.pub
+***** cat ~/.ssh/id_dsa
+***** cat /etc/ssh/ssh_config
+***** cat /etc/ssh/sshd_config
+***** cat /etc/ssh/ssh_host_dsa_key.pub
+***** cat /etc/ssh/ssh_host_dsa_key
+***** cat /etc/ssh/ssh_host_rsa_key.pub
+***** cat /etc/ssh/ssh_host_rsa_key
+***** cat /etc/ssh/ssh_host_key.pub
+***** cat /etc/ssh/ssh_host_key
 
 *** File Systems
 **** Which configuration files can be written in /etc/? Are we able to reconfigure a service?
-ls -aRl /etc/ | awk '$1 ~ /^.*.w.*/'      2> /dev/null   # anyone
-ls -aRl /etc/ | awk '$1 ~ /^..w/'         2> /dev/null   # owner
-ls -aRl /etc/ | awk '$1 ~ /^.....w/'      2> /dev/null   # group
-ls -aRl /etc/ | awk '$1 ~ /w.$/'          2> /dev/null   # other
-find /etc/ -readable -type f              2> /dev/null   # anyone
-find /etc/ -readable type f -maxdepth 1   2> /dev/null   # anyone
+***** ls -aRl /etc/ | awk '$1 ~ /^.*.w.*/'      2> /dev/null   # anyone
+***** ls -aRl /etc/ | awk '$1 ~ /^..w/'         2> /dev/null   # owner
+***** ls -aRl /etc/ | awk '$1 ~ /^.....w/'      2> /dev/null   # group
+***** ls -aRl /etc/ | awk '$1 ~ /w.$/'          2> /dev/null   # other
+***** find /etc/ -readable -type f              2> /dev/null   # anyone
+***** find /etc/ -readable type f -maxdepth 1   2> /dev/null   # anyone
 
 **** What can be found in /var/?
-ls -alh /var/log
-ls -alh /var/mail
-ls -alh /var/spool
-ls -alh /var/spool/lpd
-ls -alh /var/lib/pgsql
-ls -alh /var/lib/mysql
-cat /var/lib/dhcp3/dhclient.leases
+***** ls -alh /var/log
+***** ls -alh /var/mail
+***** ls -alh /var/spool
+***** ls -alh /var/spool/lpd
+***** ls -alh /var/lib/pgsql
+***** ls -alh /var/lib/mysql
+***** cat /var/lib/dhcp3/dhclient.leases
 
 **** Are there any settings/files (hidden) on the website? Any settings file with database information?
-ls -alhR /var/www/
-ls -alhR /srv/www/htdocs/
-ls -alhR /usr/local/www/apache2/data/
-ls -alhR /opt/lampp/htdocs/
-ls -alhR /var/www/html
+***** ls -alhR /var/www/
+***** ls -alhR /srv/www/htdocs/
+***** ls -alhR /usr/local/www/apache2/data/
+***** ls -alhR /opt/lampp/htdocs/
+***** ls -alhR /var/www/html
 
 **** Is there anything in the log files? (could help with local file includes)
-cat /etc/httpd/logs/access_log
-cat /etc/httpd/logs/access.log
-cat /etc/httpd/logs/error_log
-cat /etc/httpd/logs/error.log
-cat /var/log/apache2/access_log
-cat /var/log/apache2/access.log
-cat /var/log/apache/access_log
-cat /var/log/apache/access.log
-cat /var/log/auth.log
-cat /var/log/chttp.log
-cat /var/log/cups/error_log
-cat /var/log/dpkg.log
-cat /var/log/faillog
-cat /far/log/httpd/access_log
-cat /var/log/httpd/access.log
-cat /var/log/httpd/error_log
-cat /var/log/httpd/error.log
-cat /var/log/lastlog
-cat /var/log/lighttpd/access.log
-cat /var/log/lighttpd/error.log
-cat /var/log/lighttpd/lighttpd.access.log
-cat /var/log/lighttpd/lighttps.error.log
-cat /var/log/messages
-cat /var/log/secure
-cat /var/log/syslog
-cat /var/log/wtmp
-cat /var/log/xferlog
-cat /var/log/yum.log
-cat /var/run/utmp
-cat /var/webmin/miniserv.log
-cat /var/www/logs/access_log
-cat /var/www/logs/access.log
-ls -alh /var/lib/dhcp3
-ls -alh /var/log/postgresql/
-ls -alh /var/log/proftpd/
-ls -alh /var/log/samba
-
 Note: auth.log, boot, btmp, daemon.log, debug, dmesg, kern.log, mail.info, mail.log, mail.warn, messages, syslog, udev, wtmp
-http://www.thegeekstuff.com/2011/08/linux-var-log-files/
-
+***** cat /etc/httpd/logs/access_log
+***** cat /etc/httpd/logs/access.log
+***** cat /etc/httpd/logs/error_log
+***** cat /etc/httpd/logs/error.log
+***** cat /var/log/apache2/access_log
+***** cat /var/log/apache2/access.log
+***** cat /var/log/apache/access_log
+***** cat /var/log/apache/access.log
+***** cat /var/log/auth.log
+***** cat /var/log/chttp.log
+***** cat /var/log/cups/error_log
+***** cat /var/log/dpkg.log
+***** cat /var/log/faillog
+***** cat /far/log/httpd/access_log
+***** cat /var/log/httpd/access.log
+***** cat /var/log/httpd/error_log
+***** cat /var/log/httpd/error.log
+***** cat /var/log/lastlog
+***** cat /var/log/lighttpd/access.log
+***** cat /var/log/lighttpd/error.log
+***** cat /var/log/lighttpd/lighttpd.access.log
+***** cat /var/log/lighttpd/lighttps.error.log
+***** cat /var/log/messages
+***** cat /var/log/secure
+***** cat /var/log/syslog
+***** cat /var/log/wtmp
+***** cat /var/log/xferlog
+***** cat /var/log/yum.log
+***** cat /var/run/utmp
+***** cat /var/webmin/miniserv.log
+***** cat /var/www/logs/access_log
+***** cat /var/www/logs/access.log
+***** ls -alh /var/lib/dhcp3
+***** ls -alh /var/log/postgresql/
+***** ls -alh /var/log/proftpd/
+***** ls -alh /var/log/samba
 **** If commands are limited, can you break out of the 'jail' shell?
-python -c 'import pty;pty.spawn("/bin/bash")'
-echo os.system('/bin/bash')
-/bin/sh -i
+***** python -c 'import pty;pty.spawn("/bin/bash")'
+***** echo os.system('/bin/bash')
+***** /bin/sh -i
 
 **** How are filesystems mounted?
-mount
-df -h
+***** mount
+***** df -h
 
 **** Are there any unmounted file systems?
-cat /etc/fstab
+***** cat /etc/fstab
 
 **** What 'Advanced Linux File Permissions' are used? Sticky bits, SUID, GUID?
-find / -perm -1000 -type d 2>/dev/null    # sticky bit - only the owner of the directory or file can delete or rename
-find / -perm -g=s -type f 2>/dev/null     # SGID (chmod 2000) - run as the owner, not the user who started it
-find / -perm -u=s -type f 2>/dev/null     # SUID (chmod 4000) - run as the owner, not the user who started it
+***** find / -perm -1000 -type d 2>/dev/null    # sticky bit - only the owner of the directory or file can delete or rename
+***** find / -perm -g=s -type f 2>/dev/null     # SGID (chmod 2000) - run as the owner, not the user who started it
+***** find / -perm -u=s -type f 2>/dev/null     # SUID (chmod 4000) - run as the owner, not the user who started it
 
-find / -perm -g=s -o -perm -u=s -type f 2> /dev/null   # SGID or SGUID
+***** find / -perm -g=s -o -perm -u=s -type f 2> /dev/null   # SGID or SGUID
 
+
+***** for i in `locate -r "bin$"`; do find $i \( -perm 4000 -o -perm -2000 \) -type f 2> /dev/null
 # look in common places for SGID or SUID (quicker search)
-for i in `locate -r "bin$"`; do find $i \( -perm 4000 -o -perm -2000 \) -type f 2> /dev/null
 
+***** find / -perm -g=s -o -perm -4000 ~ -type l -maxdepth 3 -exec ls -ld } \; 2> /dev/null
 # find starting at root (/), SGID or SUID, not symbolic links, only 3 folders deep, list with more detail
-find / -perm -g=s -o -perm -4000 ~ -type l -maxdepth 3 -exec ls -ld } \; 2> /dev/null
-
 **** What locations can be written to and executed from?
-find / -writable -type d 2> /dev/null # world-writable folders
-find / -perm -222 -type d 2> /dev/null # world-writable folders
-find / -perm -o w -type d 2> /dev/null # world-writable folders
-find / -perm -o x -type d 2> /dev/null # world-executable folders
-find / \( -perm -o w -perm -o x \) -type d 2> /dev/null # world-writable and executable folders
+***** find / -writable -type d 2> /dev/null # world-writable folders
+***** find / -perm -222 -type d 2> /dev/null # world-writable folders
+***** find / -perm -o w -type d 2> /dev/null # world-writable folders
+***** find / -perm -o x -type d 2> /dev/null # world-executable folders
+***** find / \( -perm -o w -perm -o x \) -type d 2> /dev/null # world-writable and executable folders
 
 **** Are there any problem files such as world-writable or "nobody" files?
-find / -xdev -type d \( -perm -0002 -a ! -perm -1000 \) -print # world-writable files
-find / -xdev -type d \( -nouser -o -nogroup \) -print # noowner files
+***** find / -xdev -type d \( -perm -0002 -a ! -perm -1000 \) -print # world-writable files
+***** find / -xdev -type d \( -nouser -o -nogroup \) -print # noowner files
 
 *** Preparation
 **** What development tools/languages are installed/supported?
-find / -name perl*
-find / -name python*
-find / -name gcc*
-find / -name cc
+***** find / -name perl*
+***** find / -name python*
+***** find / -name gcc*
+***** find / -name cc
 
 **** How can files be uploaded?
-find / -name wget
-find / -name nc*
-find / -name netcat*
-find / -name tftp*
-find / -name ftp
+***** find / -name wget
+***** find / -name nc*
+***** find / -name netcat*
+***** find / -name tftp*
+***** find / -name ftp
 ** Windows Enumeration
 https://www.absolomb.com/2018-01-26-Windows-Privilege-Escalation-Guide/
-
 *** Operating System
 **** What is the OS and architecture? Is it missing any patches?
-systeminfo
-wmic qfe
+***** systeminfo
+***** wmic qfe
 
 **** Is there anything interesting in environment variable? A DC in LOGONSERVER?
-set
-
-PS:
-Get-ChildItem Env: | ft Key,Value
+***** set
+***** PS: Get-ChildItem Env: | ft Key,Value
 
 **** Are there any other connected drives?
-net use
-wmic logicaldisk get caption,description,providername
-
-PS:
-Get-PSDrive | where {$_.Provider -like "Microsoft.PowerShell.Core\FileSystem"}| ft Name,Root
+***** net use
+***** wmic logicaldisk get caption,description,providername
+***** PS: Get-PSDrive | where {$_.Provider -like "Microsoft.PowerShell.Core\FileSystem"}| ft Name,Root
 
 *** Users
 **** Who are you?
-whoami
-echo %USERNAME%
-
-PS:
-$env:UserName
+***** whoami
+***** echo %USERNAME%
+***** PS: $env:UserName
 
 **** Any interesting user privileges?
+***** whoami /priv
 Note: the State column does not mean that the user does or does not have acces to the privilege.
       If the privilege is listed, then that user has it.
 
-whoami /priv
-
 **** What users are on the system? Any old user profiles that weren't cleaned up?
-net users
-dir /b /ad "C:\Users"
-dir /b /ad "C:\Documents and Settings\" # XP and below
-
-PS:
-Get-LocalUser | ft Name,Enabled,LastLogon
-Get-ChildItem C:\Users -Force | select Name
+***** net users
+***** dir /b /ad "C:\Users"
+***** dir /b /ad "C:\Documents and Settings\" # XP and below
+***** PS: Get-LocalUser | ft Name,Enabled,LastLogon
+***** PS: Get-ChildItem C:\Users -Force | select Name
 
 **** Is anyone else logged in?
-qwinsta
+***** qwinsta
 
 **** What groups are on the system?
-net localgroup
-
-PS:
-Get-LocalGroup | ft Name
+***** net localgroup
+***** PS: Get-LocalGroup | ft Name
 
 **** Are any of the users in the Administrators group?
-net localgroup Administrators
-
-PS:
-Get-LocalGroupMember Administrators | ft Name, PrincipalSource
+***** net localgroup Administrators
+***** PS: Get-LocalGroupMember Administrators | ft Name, PrincipalSource
 
 **** Anything in the registry for user autologon?
-reg query "HKLM\SOFTWARE\Microsoft\Windows NT\Currentversion\Winlogon" 2>nul | findstr "DefaultUserName DefaultDomainName DefaultPassword"
-
-PS:
-Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\WinLogon' | select "Default*"
+***** reg query "HKLM\SOFTWARE\Microsoft\Windows NT\Currentversion\Winlogon" 2>nul | findstr "DefaultUserName DefaultDomainName DefaultPassword"
+***** PS: Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\WinLogon' | select "Default*"
 
 **** Anything interesting in Credential Manager?
-cmdkey /list
-dir C:\Users\username\AppData\Local\Microsoft\Credentials\
-dir C:\Users\username\AppData\Roaming\Microsoft\Credentials\
-
-PS:
-Get-ChildItem -Hidden C:\Users\Username\AppData\Local\Microsoft\Credentials\
-Get-ChildItem -Hidden C:\Users\Username\Appdata\Roaming\Microsoft\Credentials\
+***** cmdkey /list
+***** dir C:\Users\username\AppData\Local\Microsoft\Credentials\
+***** dir C:\Users\username\AppData\Roaming\Microsoft\Credentials\
+***** PS: Get-ChildItem -Hidden C:\Users\Username\AppData\Local\Microsoft\Credentials\
+***** PS: Get-ChildItem -Hidden C:\Users\Username\Appdata\Roaming\Microsoft\Credentials\
 
 **** Can we access SAM and SYSTEM files?
-%SYSTEMROOT%\repair\SAM
-%SYSTEMROOT%\System32\config\RegBack\SAM
-%SYSTEMROOT%\System32\config\SAM
-%SYSTEMROOT%\repair\system\
-%SYSTEMROOT%\System32\config\SYSTEM
-%SYSTEMROOT%\System32\config\RegBack\system
+***** %SYSTEMROOT%\repair\SAM
+***** %SYSTEMROOT%\System32\config\RegBack\SAM
+***** %SYSTEMROOT%\System32\config\SAM
+***** %SYSTEMROOT%\repair\system\
+***** %SYSTEMROOT%\System32\config\SYSTEM
+***** %SYSTEMROOT%\System32\config\RegBack\system
 *** Programs, Processes, and Services
 **** What software is installed?
-dir /a "C:\Program Files"
-dir /a "C:\Program Files (x86)"
-reg query HKEY_LOCAL_MACHINE\SOFTWARE
-
-PS:
-Get-ChildItem 'C:\Program Files', 'C:\Program Files (x86)' | ft Parent,Name,LastWriteTime
-Get-ChildItem -path Registry::HKEY_LOCAL_MACHINE\SOFTWARE | ft Name
+***** dir /a "C:\Program Files"
+***** dir /a "C:\Program Files (x86)"
+***** reg query HKEY_LOCAL_MACHINE\SOFTWARE
+***** PS: Get-ChildItem 'C:\Program Files', 'C:\Program Files (x86)' | ft Parent,Name,LastWriteTime
+***** PS: Get-ChildItem -path Registry::HKEY_LOCAL_MACHINE\SOFTWARE | ft Name
 
 **** Are there any weak folder or file permissions?
 ***** Full permissions for everyone or users on program folders?
-icacls "C:\Program Files\*" 2>nul | findstr "(F)" | findstr "Everyone"
-icacls "C:\Program Files (x86)\*" 2>nul | findstr "(F)" | findstr "Everyone"
+***** icacls "C:\Program Files\*" 2>nul | findstr "(F)" | findstr "Everyone"
+***** icacls "C:\Program Files (x86)\*" 2>nul | findstr "(F)" | findstr "Everyone"
+***** icacls "C:\Program Files\*" 2>nul | findstr "(F)" | findstr "BUILTIN\Users"
+***** icacls "C:\Program Files (x86)\*" 2>nul | findstr "(F)" | findstr "BUILTIN\Users"
 
-icacls "C:\Program Files\*" 2>nul | findstr "(F)" | findstr "BUILTIN\Users"
-icacls "C:\Program Files (x86)\*" 2>nul | findstr "(F)" | findstr "BUILTIN\Users"
-
-***** Modify permissions for everyone or users on program folders?
-icacls "C:\Program Files\*" 2>nul | findstr "(M)" | findstr "Everyone"
-icacls "C:\Program Files (x86)\*" 2>nul | findstr "(M)" | findstr "Everyone"
-
-icacls "C:\Program Files\*" 2>nul | findstr "(M)" | findstr "BUILTIN\Users"
-icacls "C:\Program Files (x86)\*" 2>nul | findstr "(M)" | findstr "BUILTIN\Users"
-
-PS:
-Get-ChildItem 'C:\Program Files\*','C:\Program Files (x86)\*' | % { try { Get-Acl $_ -EA SilentlyContinue | Where {($_.Access|select -ExpandProperty IdentityReference) -match 'Everyone'} } catch {}}
-Get-ChildItem 'C:\Program Files\*','C:\Program Files (x86)\*' | % { try { Get-Acl $_ -EA SilentlyContinue | Where {($_.Access|select -ExpandProperty IdentityReference) -match 'BUILTIN\Users'} } catch {}}
-
-You can also upload accesschk from Sysinternals to check for writable folders and files.
-accesschk.exe -awsu "Everyone" *
-accesschk.exe -qwsu "Authenticated Users" *
-accesschk.exe -qwsu "Users" *
+**** Modify permissions for everyone or users on program folders?
+***** icacls "C:\Program Files\*" 2>nul | findstr "(M)" | findstr "Everyone"
+***** icacls "C:\Program Files (x86)\*" 2>nul | findstr "(M)" | findstr "Everyone"
+***** icacls "C:\Program Files\*" 2>nul | findstr "(M)" | findstr "BUILTIN\Users"
+***** icacls "C:\Program Files (x86)\*" 2>nul | findstr "(M)" | findstr "BUILTIN\Users"
+***** PS: Get-ChildItem 'C:\Program Files\*','C:\Program Files (x86)\*' | % { try { Get-Acl $_ -EA SilentlyContinue | Where {($_.Access|select -ExpandProperty IdentityReference) -match 'Everyone'} } catch {}}
+***** PS: Get-ChildItem 'C:\Program Files\*','C:\Program Files (x86)\*' | % { try { Get-Acl $_ -EA SilentlyContinue | Where {($_.Access|select -ExpandProperty IdentityReference) -match 'BUILTIN\Users'} } catch {}}
+***** Sysinternals: accesschk.exe -awsu "Everyone" *
+***** Sysinternals: accesschk.exe -qwsu "Authenticated Users" *
+***** Sysinternals: accesschk.exe -qwsu "Users" *
 
 **** What are the running process/services on the system? Is there an inside service not exposed?
-tasklist /svc
-tasklist /v
-net start
-sc query
-
-PS:
-Get-Process | where {$_.ProcessName -notlike "svchost*"} | ft ProcessName, ID
-Get-Service
-
+***** tasklist /svc
+***** tasklist /v
+***** net start
+***** sc query
+***** PS: Get-Process | where {$_.ProcessName -notlike "svchost*"} | ft ProcessName, ID
+***** PS: Get-Service
+***** PS: Get-WmiObject -Query "Select * from Win32_Process" | where {$_.Name -notlike "svchost*"} | Select Name, Handle, @{Label="Owner";Expression={$_.GetOwner().User}} | ft -AutoSize
 This one liner returns the process owner without admin rights.
 If it is blank, it's probably running as SYSTEM, NETWORK SERVICE, or LOCAL SERVICE.
-Get-WmiObject -Query "Select * from Win32_Process" | where {$_.Name -notlike "svchost*"} | Select Name, Handle, @{Label="Owner";Expression={$_.GetOwner().User}} | ft -AutoSize
 
 **** Any weak service permissions? Can we reconfigure anything?
-This requires Sysinternals accesschk.
-
-accesschk.exe -uwcqv "Everyone" *
-accesschk.exe -uwcqv "Authenticated Users" *
-accesschk.exe -uwcqv "Users" *
+***** Sysinternals: accesschk.exe -uwcqv "Everyone" *
+***** Sysinternals: accesschk.exe -uwcqv "Authenticated Users" *
+***** Sysinternals: accesschk.exe -uwcqv "Users" *
 
 **** Are there any unquoted service paths?
-wmic service get name,displayname,pathname,startmode 2>nul | findstr /i "Auto" 2>nul | findstr /i /v "C:\Windows\\" 2>nul | findstr /i /v """
-
-PS:
-gwmi -class Win32_Service -Property Name, DisplayName, PathName, StartMode | Where {$_.StartMode -q "Auto" -and $_.PathName -notlike "C:\Windows*" -and $_.PathName -notlike '"*'} | select PathName,DisplayName,Name
+***** wmic service get name,displayname,pathname,startmode 2>nul | findstr /i "Auto" 2>nul | findstr /i /v "C:\Windows\\" 2>nul | findstr /i /v """
+***** PS: gwmi -class Win32_Service -Property Name, DisplayName, PathName, StartMode | Where {$_.StartMode -q "Auto" -and $_.PathName -notlike "C:\Windows*" -and $_.PathName -notlike '"*'} | select PathName,DisplayName,Name
 
 **** What scheduled tasks are there? Anything custom implemented?
-schtasks /query /fo LIST 2>nul | findstr TaskName
-dir C:\windows\tasks
-
-PS:
-Get-ScheduledTask | where {$_.TaskPath -notlike "\Microsoft*"} | ft TaskName,TaskPath,State
+***** schtasks /query /fo LIST 2>nul | findstr TaskName
+***** dir C:\windows\tasks
+***** PS: Get-ScheduledTask | where {$_.TaskPath -notlike "\Microsoft*"} | ft TaskName,TaskPath,State
 
 **** What is run at startup?
-wmic startup get caption,command
-reg query HKLM\Software\Microsoft\Windows\CurrentVersion\Run
-reg query HKLM\Software\Microsoft\Windows\CurrentVersion\RunOnce
-reg query HKCU\Software\Microsoft\Windows\CurrentVersion\Run
-reg query HKCU\Software\Microsoft\Windows\CurrentVersion\RunOnce
-dir "C:\Documents and Settings\All Users\Start Menu\Programs\Startup"
-dir "C:\Documents and Settings\%username%\Start Menu\Programs\Startup"
-
-PS:
-Get-CimInstance Win32_StartupCommand | select Name, command, Location, User | fl
-Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run'
-Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\RunOnce'
-Get-ItemProperty -Path 'Registry::HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run'
-Get-ItemProperty -Path 'Registry::HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\RunOnce'
-Get-ChildItem "C:\Users\All Users\Start Menu\Programs\Startup"
-Get-ChildItem "C:\Users\$env:USERNAME\Start Menu\Programs\Startup"
+***** wmic startup get caption,command
+***** reg query HKLM\Software\Microsoft\Windows\CurrentVersion\Run
+***** reg query HKLM\Software\Microsoft\Windows\CurrentVersion\RunOnce
+***** reg query HKCU\Software\Microsoft\Windows\CurrentVersion\Run
+***** reg query HKCU\Software\Microsoft\Windows\CurrentVersion\RunOnce
+***** dir "C:\Documents and Settings\All Users\Start Menu\Programs\Startup"
+***** dir "C:\Documents and Settings\%username%\Start Menu\Programs\Startup"
+***** PS: Get-CimInstance Win32_StartupCommand | select Name, command, Location, User | fl
+***** PS: Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run'
+***** PS: Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\RunOnce'
+***** PS: Get-ItemProperty -Path 'Registry::HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run'
+***** PS: Get-ItemProperty -Path 'Registry::HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\RunOnce'
+***** PS: Get-ChildItem "C:\Users\All Users\Start Menu\Programs\Startup"
+***** PS: Get-ChildItem "C:\Users\$env:USERNAME\Start Menu\Programs\Startup"
 
 **** Is AlwaysInstallElevated enabled?
-reg query HKCU\SOFTWARE\Policies\Microsoft\Windows\Installer /v AlwaysInstallElevated
+***** reg query HKCU\SOFTWARE\Policies\Microsoft\Windows\Installer /v AlwaysInstallElevated
 *** Networking
 **** What NICS are connected? Are there multiple networks?
-ipconfig /all
-
-PS:
-Get-NetIPConfiguration | ft InterfaceAliace,InterfaceDescription,IPv4Address
-Get-DnsClientServerAddress -AddressFamily IPv4 | ft
+***** ipconfig /all
+***** PS: Get-NetIPConfiguration | ft InterfaceAliace,InterfaceDescription,IPv4Address
+***** PS: Get-DnsClientServerAddress -AddressFamily IPv4 | ft
 
 **** What routes do we have?
-route print
-
-PS:
-Get-NetRoute -AddressFamily IPv4 | ft DestinationPrefix,NextHop,RouteMetric,ifIndex
+***** route print
+***** PS: Get-NetRoute -AddressFamily IPv4 | ft DestinationPrefix,NextHop,RouteMetric,ifIndex
 
 **** Anything in the ARP cache?
-arp -a
-
-PS:
-Get-NetNeighbor -AddressFamily IPv4 | ft ifIndex,IPAddress,LinkLayerAddress,State
+***** arp -a
+***** PS: Get-NetNeighbor -AddressFamily IPv4 | ft ifIndex,IPAddress,LinkLayerAddress,State
 
 **** Are there connections to other hosts?
-netstat -ano
+***** netstat -ano
 
 **** Anything in the hosts file?
-C:\WINDOWS\System32\drivers\etc\hosts
+***** C:\WINDOWS\System32\drivers\etc\hosts
 
 **** Is the firewall turned on? If so what's configured?
-netsh firewall show state
-netsh firewall show config
-netsh advfirewall firewall show rule name=all
-netsh advfirewall export "firewall.txt"
+***** netsh firewall show state
+***** netsh firewall show config
+***** netsh advfirewall firewall show rule name=all
+***** netsh advfirewall export "firewall.txt"
 
 **** Any other interesting interface configurations?
-netsh dump
+***** netsh dump
 
 **** Are there any SNMP configurations?
-reg query HKLM\SYSTEM\CurrentControlSet\Services\SNMP /s
-
-PS:
-Get-ChildItem -path HKLM:\SYSTEM\CurrentControlSet\Services\SNMP -Recurse
+***** reg query HKLM\SYSTEM\CurrentControlSet\Services\SNMP /s
+***** PS: Get-ChildItem -path HKLM:\SYSTEM\CurrentControlSet\Services\SNMP -Recurse
 
 *** Interesting Files and Sensitive Information
 **** Any passwords in the registry?
-reg query HKCU /f password /t REG_SZ /s
-reg query HKLM /f password /t REG_SZ /s
+***** reg query HKCU /f password /t REG_SZ /s
+***** reg query HKLM /f password /t REG_SZ /s
 
 **** Are there sysprep or unattend files available that weren't cleaned up?
-dir /s *sysprep.inf *sysprep.xml *unattended.xml *unattend.xml *unattend.txt 2>nul
-
-PS:
-Get-Childitem -Path C:\ -Include *unattend*,*sysprep* -File -Recurse -ErrorAction SilentlyContinue | where {($_.Name -like "*.xml" -or $_.Name -like "*.txt" -or $_.Name -like "*.ini")}
+***** dir /s *sysprep.inf *sysprep.xml *unattended.xml *unattend.xml *unattend.txt 2>nul
+***** PS: Get-Childitem -Path C:\ -Include *unattend*,*sysprep* -File -Recurse -ErrorAction SilentlyContinue | where {($_.Name -like "*.xml" -or $_.Name -like "*.txt" -or $_.Name -like "*.ini")}
 
 **** If the server is an IIS webserver, what's in inetpub? Any hidden directories? Web config files?
-dir /a C:\inetpub\
-dir /s web.config
-C:\Windows\System32\inetsrv\config\applicationHost.config
-
-PS:
-Get-ChildItem -Path C:\inetpub\ -Include web.config -File -Recurse -ErrorAction SilentlyContinue
+***** dir /a C:\inetpub\
+***** dir /s web.config
+***** C:\Windows\System32\inetsrv\config\applicationHost.config
+***** PS: Get-ChildItem -Path C:\inetpub\ -Include web.config -File -Recurse -ErrorAction SilentlyContinue
 
 **** What's in the IIS logs?
-C:\inetpub\logs\LogFiles\W3SVC1\u_ex[YYMMDD].log
-C:\inetpub\logs\LogFiles\W3SVC2\u_ex[YYMMDD].log
-C:\inetpub\logs\LogFiles\FTPSVC1\u_ex[YYMMDD].log
-C:\inetpub\logs\LogFiles\FTPSVC2\u_ex[YYMMDD].log
+***** C:\inetpub\logs\LogFiles\W3SVC1\u_ex[YYMMDD].log
+***** C:\inetpub\logs\LogFiles\W3SVC2\u_ex[YYMMDD].log
+***** C:\inetpub\logs\LogFiles\FTPSVC1\u_ex[YYMMDD].log
+***** C:\inetpub\logs\LogFiles\FTPSVC2\u_ex[YYMMDD].log
 
 **** Is XAMPP, Apache, or PHP installed? Do they have configuration files?
-dir /s php.ini httpd.conf httpd-xampp.conf my.ini my.cnf
-
-PS:
-Get-ChildItem -Path C:\ -Include php.ini,httpd.conf,httpd-xampp.conf,my.ini,my.cnf -File _Recurse -ErrorAction SilentlyContinue
+***** dir /s php.ini httpd.conf httpd-xampp.conf my.ini my.cnf
+***** PS: Get-ChildItem -Path C:\ -Include php.ini,httpd.conf,httpd-xampp.conf,my.ini,my.cnf -File _Recurse -ErrorAction SilentlyContinue
 
 **** Any Apache web logs?
-dir /s access.log error.log
-
-PS:
-Get-ChildItem -Path C:\ -Include access.log,error.log -File -Recurse -ErrorAction SilentlyContinue
+***** dir /s access.log error.log
+***** PS: Get-ChildItem -Path C:\ -Include access.log,error.log -File -Recurse -ErrorAction SilentlyContinue
 
 **** Any interesting files to look at? Possibly inside User directoreis (Desktop, Documents, etc)?
-dir /s *pass* == *vnc* == *.config* 2>nul
-
-PS:
-Get-ChildItem -Path C:\Users\ -Include *password*,*vnc,*.config -File -Recurse -ErrorAction SilentlyContinue
+***** dir /s *pass* == *vnc* == *.config* 2>nul
+***** PS: Get-ChildItem -Path C:\Users\ -Include *password*,*vnc,*.config -File -Recurse -ErrorAction SilentlyContinue
 
 **** Files containing password inside them?
-findstr /si password *.xml *.ini *.txt *.config 2>nul
-
-PS:
-Get-CHildItem C:\* -include *.xml,*.ini,*.txt,*.config -Recurse -ErrorAction SilentlyContinue | Select-String -Pattern "password"
+***** findstr /si password *.xml *.ini *.txt *.config 2>nul
+***** PS: Get-CHildItem C:\* -include *.xml,*.ini,*.txt,*.config -Recurse -ErrorAction SilentlyContinue | Select-String -Pattern "password"
 
 * Post Exploitation
 ** Credentials, Hashes, Keys, etc.
