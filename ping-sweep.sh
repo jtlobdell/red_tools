@@ -3,7 +3,7 @@ trap 'exit' INT
 
 function print_usage {
         echo "Usage: $0 [-t ttl] ip_octets"
-        echo -e "\tip prefix - first three octects of the ip range"
+        echo -e "\tip_octects - first three octects of the ip range"
 	echo -e "\t-t ttl - ttl to use with ping"
         echo -e "\texample: $0 -t 3 10.11.1"
 	echo -e "\t\tconduct ping sweep on addresses 10.11.1.1-254 with ttl of 3"
