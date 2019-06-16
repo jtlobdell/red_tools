@@ -26,7 +26,7 @@ echo "Running reverse lookup brute force on IP range $net(1-254) with dns $dns"
 
 # do the ping sweep
 for i in `seq 254`; do
-	host $net$i $dns | tail -n 1 | grep -v "NXDOMAIN" \
+	host $net$i $dns | tail -n 1 | grep -v "NXDOMAIN\|REFUSED" \
 	| awk -F '[. ]' \
 	  '{ printf $4"."$3"."$2"."$1" "; for (i=10;i<=NF;++i) printf $i"."; printf "\n"}' \
 	| sed 's/..$//'
