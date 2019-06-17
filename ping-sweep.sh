@@ -42,5 +42,5 @@ echo "Running ping sweep with ttl of $ttl and IP range of $net(1-254)"
 
 # do the ping sweep
 for i in `seq 254`; do
-	ping -c 1 -w 2 $net$i | grep from | cut -d " " -f 4 | sed 's/://' &
+	ping -c 1 -w $ttl $net$i | grep from | cut -d " " -f 4 | sed 's/://' &
 done | sort -n -t . -k 4
