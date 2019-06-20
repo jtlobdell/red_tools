@@ -403,11 +403,14 @@ Note: auth.log, boot, btmp, daemon.log, debug, dmesg, kern.log, mail.info, mail.
 ***** find / -name ftp
 ** Windows Enumeration
 https://www.absolomb.com/2018-01-26-Windows-Privilege-Escalation-Guide/
+https://guif.re/windowseop
 *** Operating System
 **** What is the OS and architecture? Is it missing any patches?
 ***** systeminfo
 ***** wmic qfe
 
+***** type C:\windows\system32\eula.txt
+***** hostname
 **** Is there anything interesting in environment variable? A DC in LOGONSERVER?
 ***** set
 ***** PS: Get-ChildItem Env: | ft Key,Value
@@ -422,7 +425,6 @@ https://www.absolomb.com/2018-01-26-Windows-Privilege-Escalation-Guide/
 ***** whoami
 ***** echo %USERNAME%
 ***** PS: $env:UserName
-
 **** Any interesting user privileges?
 ***** whoami /priv
 Note: the State column does not mean that the user does or does not have acces to the privilege.
@@ -486,9 +488,9 @@ Note: the State column does not mean that the user does or does not have acces t
 ***** icacls "C:\Program Files (x86)\*" 2>nul | findstr "(M)" | findstr "BUILTIN\Users"
 ***** PS: Get-ChildItem 'C:\Program Files\*','C:\Program Files (x86)\*' | % { try { Get-Acl $_ -EA SilentlyContinue | Where {($_.Access|select -ExpandProperty IdentityReference) -match 'Everyone'} } catch {}}
 ***** PS: Get-ChildItem 'C:\Program Files\*','C:\Program Files (x86)\*' | % { try { Get-Acl $_ -EA SilentlyContinue | Where {($_.Access|select -ExpandProperty IdentityReference) -match 'BUILTIN\Users'} } catch {}}
-***** Sysinternals: accesschk.exe -awsu "Everyone" *
-***** Sysinternals: accesschk.exe -qwsu "Authenticated Users" *
-***** Sysinternals: accesschk.exe -qwsu "Users" *
+***** Sysinternals: accesschk.exe /accepteula -awsu "Everyone" *
+***** Sysinternals: accesschk.exe /accepteula -qwsu "Authenticated Users" *
+***** Sysinternals: accesschk.exe /accepteula -qwsu "Users" *
 
 **** What are the running process/services on the system? Is there an inside service not exposed?
 ***** tasklist /svc
@@ -502,9 +504,9 @@ This one liner returns the process owner without admin rights.
 If it is blank, it's probably running as SYSTEM, NETWORK SERVICE, or LOCAL SERVICE.
 
 **** Any weak service permissions? Can we reconfigure anything?
-***** Sysinternals: accesschk.exe -uwcqv "Everyone" *
-***** Sysinternals: accesschk.exe -uwcqv "Authenticated Users" *
-***** Sysinternals: accesschk.exe -uwcqv "Users" *
+***** Sysinternals: accesschk.exe /accepteula -uwcqv "Everyone" *
+***** Sysinternals: accesschk.exe /accepteula -uwcqv "Authenticated Users" *
+***** Sysinternals: accesschk.exe /accepteula -uwcqv "Users" *
 
 **** Are there any unquoted service paths?
 ***** wmic service get name,displayname,pathname,startmode 2>nul | findstr /i "Auto" 2>nul | findstr /i /v "C:\Windows\\" 2>nul | findstr /i /v """
