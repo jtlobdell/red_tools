@@ -174,7 +174,10 @@ https://blog.g0tmi1k.com/2011/08/basic-linux-privilege-escalation/
 ***** ls -alh /var/spool/cron
 ***** ls -al /etc/ | grep cron
 ***** ls -al /etc/cron*
-***** cat /etc/cron*
+***** for f in `ls /etc/cron.daily`; do echo "****** $f"; cat /etc/cron.daily/$f; done
+***** for f in `ls /etc/cron.hourly`; do echo "****** $f"; cat /etc/cron.hourly/$f; done
+***** for f in `ls /etc/cron.monthly`; do echo "****** $f"; cat /etc/cron.monthly/$f; done
+***** for f in `ls /etc/cron.weekly`; do echo "****** $f"; cat /etc/cron.weekly/$f; done
 ***** cat /etc/at.allow
 ***** cat /etc/at.deny
 ***** cat /etc/cron.allow
@@ -234,16 +237,20 @@ http://lanmaster53.com/2011/05/7-linux-shells-using-built-in-tools/
 ***** proxychains ifconfig
 
 *** Confidential Information and Users
-**** Who are you? Who is logged in? Who has been logged in? Who else is there? Who can do what?
+**** Who are you? Who is logged in? Who has been logged in? Who else is there? Who can do what? Do any users have weak passwords?
 ***** id
 ***** who
 ***** w
 ***** last
 ***** cat /etc/passwd | cut -d: -f1 # list of users
+****** su [user] --- try weak passwords
+******* password
+******* [user name]
+******* [host name]
+******* [no password]
 ***** grep -v -E "^#" /etc/passwd | awk -F: '$3 == 0  { print $1 }' # List of superusers
 ***** cat /etc/sudoers
 ***** sudo -l
-
 **** What sensitive files can be found?
 ***** cat /etc/passwd
 ***** cat /etc/group
