@@ -88,6 +88,7 @@ summary
 *** Potential Exploits
 Find any exploits for this version?
 
+
 ** Vulnerability Scanning
 Make a section for each vulnerability you check for.
 Summarize the scan results here (i.e. what scans returned positive?)
@@ -340,7 +341,6 @@ Note: auth.log, boot, btmp, daemon.log, debug, dmesg, kern.log, mail.info, mail.
 ***** cat /var/log/httpd/access.log
 ***** cat /var/log/httpd/error_log
 ***** cat /var/log/httpd/error.log
-***** cat /var/log/lastlog
 ***** cat /var/log/lighttpd/access.log
 ***** cat /var/log/lighttpd/error.log
 ***** cat /var/log/lighttpd/lighttpd.access.log
@@ -348,13 +348,15 @@ Note: auth.log, boot, btmp, daemon.log, debug, dmesg, kern.log, mail.info, mail.
 ***** cat /var/log/messages
 ***** cat /var/log/secure
 ***** cat /var/log/syslog
-***** cat /var/log/wtmp
 ***** cat /var/log/xferlog
 ***** cat /var/log/yum.log
-***** cat /var/run/utmp
 ***** cat /var/webmin/miniserv.log
 ***** cat /var/www/logs/access_log
 ***** cat /var/www/logs/access.log
+***** last -f /var/log/lastlog
+***** last -f /var/run/utmp
+***** last -f /var/log/wtmp
+
 ***** ls -alh /var/lib/dhcp3
 ***** ls -alh /var/log/postgresql/
 ***** ls -alh /var/log/proftpd/
