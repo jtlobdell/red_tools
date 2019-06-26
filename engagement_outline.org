@@ -88,7 +88,29 @@ summary
 *** Potential Exploits
 Find any exploits for this version?
 
+** RPC
+<nmap rpcinfo script>
+** mDNS
+# avahi-browse -all
+# avahi-browse --resolve <second to last column from above>
+# anything else?
+** SMB
+version
+*** enum4linux output
+*** Users
+List any users that were discovered.
+Do we have possible credentials or hashes from other places?
+Can we psexec/winexe any of them?
+*** Shares
+What shares are listed? Can we browse any of them?
+# smbclient -L //<netbios name>
 
+*** Potential Vulnerabilities
+*** Potential Exploits
+** ident
+*** ident-user-enum
+*** Potential Vulnerabilities
+*** Potential Exploits
 ** Vulnerability Scanning
 Make a section for each vulnerability you check for.
 Summarize the scan results here (i.e. what scans returned positive?)
@@ -413,6 +435,7 @@ Note: auth.log, boot, btmp, daemon.log, debug, dmesg, kern.log, mail.info, mail.
 ** Windows Enumeration
 https://www.absolomb.com/2018-01-26-Windows-Privilege-Escalation-Guide/
 https://guif.re/windowseop
+http://www.fuzzysecurity.com/tutorials/16.html
 *** Operating System
 **** What is the OS and architecture? Is it missing any patches?
 ***** systeminfo
@@ -614,6 +637,14 @@ If it is blank, it's probably running as SYSTEM, NETWORK SERVICE, or LOCAL SERVI
 ***** findstr /si password *.xml *.ini *.txt *.config 2>nul
 ***** PS: Get-CHildItem C:\* -include *.xml,*.ini,*.txt,*.config -Recurse -ErrorAction SilentlyContinue | Select-String -Pattern "password"
 
+** Notable Findings
+Take note of anything that stands out while enumerating.
+*** netstat vs portscan
+Any services running that aren't exposed externally?
+If there are, set up port forwarding then conduct info gathering on them like you normally would.
+*** Discovered users vs credentials/hashes from other systems
+** Unexposed Service Enumeration
+** Exploitation
 * Post Exploitation
 ** Credentials, Hashes, Keys, etc.
 *** Cracked Hashes
@@ -638,6 +669,10 @@ pidof X
 ****** Cookies
 ***** Recently Opened
 *** Windows
+**** mimikatz
+***** vault::cred
+***** lsadump::sam
+***** lsadump::lsa
 **** fgdump
 **** pwdump
 **** Windows Credential Editor (WCE)
