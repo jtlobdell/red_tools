@@ -175,8 +175,8 @@ https://blog.g0tmi1k.com/2011/08/basic-linux-privilege-escalation/
 **** What applications are installed and what are their versions? Are they currently running?
 ***** ls -alh /usr/bin/
 ***** ls -alh /sbin/
-***** dpkg -l
-***** rpm -qa
+***** dpkg -l | sort
+***** rpm -qa | sort
 ***** ls -alh /var/cache/apt/archives0
 ***** ls -alh /var/cache/yum/
 
@@ -225,7 +225,7 @@ https://blog.g0tmi1k.com/2011/08/basic-linux-privilege-escalation/
 ***** cat /etc/resolv.conf
 ***** cat /etc/sysconfig/network
 ***** cat /etc/networks
-***** iptables -L
+***** /sbin/iptables -L
 ***** hostname
 ***** dnsdomainname
 
@@ -242,8 +242,8 @@ https://blog.g0tmi1k.com/2011/08/basic-linux-privilege-escalation/
 ***** w
 
 **** What IP and MAC addresses are cached?
-***** arp -e
-***** route
+***** /sbin/arp -e
+***** /sbin/route
 ***** /sbin/route -nee
 
 **** Is packet sniffing possible? What can be seen?
