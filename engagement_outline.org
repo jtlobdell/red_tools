@@ -321,12 +321,12 @@ http://lanmaster53.com/2011/05/7-linux-shells-using-built-in-tools/
 
 *** File Systems
 **** Which configuration files can be written in /etc/? Are we able to reconfigure a service?
-***** ls -aRl /etc/ | awk '$1 ~ /^.*.w.*/'      2> /dev/null   # anyone
-***** ls -aRl /etc/ | awk '$1 ~ /^..w/'         2> /dev/null   # owner
-***** ls -aRl /etc/ | awk '$1 ~ /^.....w/'      2> /dev/null   # group
-***** ls -aRl /etc/ | awk '$1 ~ /w.$/'          2> /dev/null   # other
-***** find /etc/ -readable -type f              2> /dev/null   # anyone
-***** find /etc/ -readable type f -maxdepth 1   2> /dev/null   # anyone
+***** ls -aRl /etc/ | awk '$1 ~ /^.*.w.*/' 2> /dev/null   # anyone
+***** ls -aRl /etc/ | awk '$1 ~ /^..w/' 2> /dev/null   # owner
+***** ls -aRl /etc/ | awk '$1 ~ /^.....w/' 2> /dev/null   # group
+***** ls -aRl /etc/ | awk '$1 ~ /w.$/' 2> /dev/null   # other
+***** find /etc/ -readable -type f 2> /dev/null   # anyone
+***** find /etc/ -readable type f -maxdepth 1 2> /dev/null   # anyone
 
 **** What can be found in /var/?
 ***** ls -alh /var/log
@@ -403,7 +403,7 @@ Note: auth.log, boot, btmp, daemon.log, debug, dmesg, kern.log, mail.info, mail.
 ***** find / -perm -g=s -o -perm -u=s -type f 2> /dev/null   # SGID or SGUID
 
 
-***** for i in `locate -r "bin$"`; do find $i \( -perm 4000 -o -perm -2000 \) -type f 2> /dev/null
+***** for i in `locate -r "bin$"`; do find $i \( -perm 4000 -o -perm -2000 \) -type f 2> /dev/null; done
 # look in common places for SGID or SUID (quicker search)
 
 ***** find / -perm -g=s -o -perm -4000 ~ -type l -maxdepth 3 -exec ls -ld } \; 2> /dev/null
@@ -416,22 +416,21 @@ Note: auth.log, boot, btmp, daemon.log, debug, dmesg, kern.log, mail.info, mail.
 ***** find / \( -perm -o w -perm -o x \) -type d 2> /dev/null # world-writable and executable folders
 
 **** Are there any problem files such as world-writable or "nobody" files?
-***** find / -xdev -type d \( -perm -0002 -a ! -perm -1000 \) -print # world-writable files
-***** find / -xdev -type d \( -nouser -o -nogroup \) -print # noowner files
+***** find / -xdev -type d \( -perm -0002 -a ! -perm -1000 \) -print 2> /dev/null # world-writable files
+***** find / -xdev -type d \( -nouser -o -nogroup \) -print 2> /dev/null # noowner files
 
 *** Preparation
 **** What development tools/languages are installed/supported?
-***** find / -name perl*
-***** find / -name python*
-***** find / -name gcc*
-***** find / -name cc
-
+***** find / -name perl* 2> /dev/null
+***** find / -name python* 2> /dev/null
+***** find / -name gcc* 2> /dev/null
+***** find / -name cc 2> /dev/null
 **** How can files be uploaded?
-***** find / -name wget
-***** find / -name nc*
-***** find / -name netcat*
-***** find / -name tftp*
-***** find / -name ftp
+***** find / -name wget 2> /dev/null
+***** find / -name nc* 2> /dev/null
+***** find / -name netcat* 2> /dev/null
+***** find / -name tftp* 2> /dev/null
+***** find / -name ftp 2> /dev/null
 ** Windows Enumeration
 https://www.absolomb.com/2018-01-26-Windows-Privilege-Escalation-Guide/
 https://guif.re/windowseop
