@@ -631,7 +631,7 @@ If it is blank, it's probably running as SYSTEM, NETWORK SERVICE, or LOCAL SERVI
 **** Any interesting files to look at? Possibly inside User directoreis (Desktop, Documents, etc)?
 ***** dir /s *pass* == *vnc* == *.config* 2>nul
 ***** PS: Get-ChildItem -Path C:\Users\ -Include *password*,*vnc,*.config -File -Recurse -ErrorAction SilentlyContinue
-
+***** PowerShell History: C:\Users\[user]\AppData\Roaming\Microsoft\Windows\powershell\psreadline\ConsoleHost_history.txt
 **** Files containing password inside them?
 ***** findstr /si password *.xml *.ini *.txt *.config 2>nul
 ***** PS: Get-CHildItem C:\* -include *.xml,*.ini,*.txt,*.config -Recurse -ErrorAction SilentlyContinue | Select-String -Pattern "password"
