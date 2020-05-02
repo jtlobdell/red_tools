@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python2
 import sys
 def print_usage():
 	print sys.argv[0] + " [tasklist_file netstat_file]"

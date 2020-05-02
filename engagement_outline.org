@@ -442,6 +442,9 @@ http://www.fuzzysecurity.com/tutorials/16.html
 
 ***** type C:\windows\system32\eula.txt
 ***** hostname
+**** What is the corresponding Server/Non-Server version?
+(wikipedia...)
+**** Any kernel exploits?
 **** Is there anything interesting in environment variable? A DC in LOGONSERVER?
 ***** set
 ***** PS: Get-ChildItem Env: | ft Key,Value
@@ -569,7 +572,7 @@ If it is blank, it's probably running as SYSTEM, NETWORK SERVICE, or LOCAL SERVI
 *** Networking
 **** What NICS are connected? Are there multiple networks?
 ***** ipconfig /all
-***** PS: Get-NetIPConfiguration | ft InterfaceAliace,InterfaceDescription,IPv4Address
+***** PS: Get-NetIPConfiguration | ft InterfaceAlias,InterfaceDescription,IPv4Address
 ***** PS: Get-DnsClientServerAddress -AddressFamily IPv4 | ft
 
 **** What routes do we have?
@@ -622,7 +625,7 @@ If it is blank, it's probably running as SYSTEM, NETWORK SERVICE, or LOCAL SERVI
 
 **** Is XAMPP, Apache, or PHP installed? Do they have configuration files?
 ***** dir /s php.ini httpd.conf httpd-xampp.conf my.ini my.cnf
-***** PS: Get-ChildItem -Path C:\ -Include php.ini,httpd.conf,httpd-xampp.conf,my.ini,my.cnf -File _Recurse -ErrorAction SilentlyContinue
+***** PS: Get-ChildItem -Path C:\ -Include php.ini,httpd.conf,httpd-xampp.conf,my.ini,my.cnf -File -Recurse -ErrorAction SilentlyContinue
 
 **** Any Apache web logs?
 ***** dir /s access.log error.log
