@@ -3,7 +3,7 @@
 [tl;dr of services, ports, versions, etc.]
 
 ** Port Scan
-[relevant output of port scans]
+nmap -sS -sC -sV -p- <ip>
 
 ** Web Server
 *** Summary
