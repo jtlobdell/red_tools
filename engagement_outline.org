@@ -345,6 +345,8 @@ http://lanmaster53.com/2011/05/7-linux-shells-using-built-in-tools/
 ***** ls -alhR /var/www/html
 
 **** Is there anything in the log files? (could help with local file includes)
+***** find /var/log/ -readable 2>/dev/null
+
 Note: auth.log, boot, btmp, daemon.log, debug, dmesg, kern.log, mail.info, mail.log, mail.warn, messages, syslog, udev, wtmp
 ***** cat /etc/httpd/logs/access_log
 ***** cat /etc/httpd/logs/access.log
@@ -397,11 +399,10 @@ Note: auth.log, boot, btmp, daemon.log, debug, dmesg, kern.log, mail.info, mail.
 
 **** What 'Advanced Linux File Permissions' are used? Sticky bits, SUID, GUID?
 ***** find / -perm -1000 -type d 2>/dev/null    # sticky bit - only the owner of the directory or file can delete or rename
-***** find / -perm -g=s -type f 2>/dev/null     # SGID (chmod 2000) - run as the owner, not the user who started it
 ***** find / -perm -u=s -type f 2>/dev/null     # SUID (chmod 4000) - run as the owner, not the user who started it
 
+***** find / -perm -g=s -type f 2>/dev/null     # SGID (chmod 2000) - run as the owner, not the user who started it
 ***** find / -perm -g=s -o -perm -u=s -type f 2> /dev/null   # SGID or SGUID
-
 
 ***** for i in `locate -r "bin$"`; do find $i \( -perm 4000 -o -perm -2000 \) -type f 2> /dev/null; done
 # look in common places for SGID or SUID (quicker search)
@@ -409,15 +410,16 @@ Note: auth.log, boot, btmp, daemon.log, debug, dmesg, kern.log, mail.info, mail.
 ***** find / -perm -g=s -o -perm -4000 ~ -type l -maxdepth 3 -exec ls -ld } \; 2> /dev/null
 # find starting at root (/), SGID or SUID, not symbolic links, only 3 folders deep, list with more detail
 **** What locations can be written to and executed from?
-***** find / -writable -type d 2> /dev/null # world-writable folders
+***** find / -writable -type f 2>/dev/null | grep -v '/proc/'
+***** find / -writable -type d 2> /dev/null
 ***** find / -perm -222 -type d 2> /dev/null # world-writable folders
 ***** find / -perm -o w -type d 2> /dev/null # world-writable folders
 ***** find / -perm -o x -type d 2> /dev/null # world-executable folders
 ***** find / \( -perm -o w -perm -o x \) -type d 2> /dev/null # world-writable and executable folders
 
 **** Are there any problem files such as world-writable or "nobody" files?
-***** find / -xdev -type d \( -perm -0002 -a ! -perm -1000 \) -print 2> /dev/null # world-writable files
-***** find / -xdev -type d \( -nouser -o -nogroup \) -print 2> /dev/null # noowner files
+***** find / -xdev -type f \( -perm -0002 -a ! -perm -1000 \) -print 2> /dev/null # world-writable files
+***** find / -xdev -type f \( -nouser -o -nogroup \) -print 2> /dev/null # noowner files
 
 *** Preparation
 **** What development tools/languages are installed/supported?
